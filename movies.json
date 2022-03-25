@@ -1,0 +1,88 @@
+{"movies":[
+
+{"id": 1,
+"name": "American Psycho",
+
+"writers": [
+"Bret Easton Ellis",
+"Mary Harron",
+"Guinevere Turner"
+],
+
+"top_cast": [
+"Christian Pale",
+"Justin Theroux",
+"Josh Lucas",
+"Bill Sage",
+"Chloë Sevigny",
+"Reese Witherspoon",
+"Samantha Mathis",
+"Matt Ross",
+"Jared Leto",
+"Willem Dafoe",
+"Cara Seymour",
+"Gulnevere Turner",
+"Stephen Bogaert",
+"Monika Meier",
+"Reg E. Cathey",
+"Blair Williams",
+"Marie Dame",
+"Kelley Harron"
+]},
+
+{"id": 2,
+"name": "Nightcrawler",
+
+"writers": "Dan Gilroy",
+
+"top_cast": [
+"Jake Gyllenhaal",
+"Rene Russo",
+"Bill Paxton",
+"Riz Ahmed",
+"Michael Papajohn",
+"Marco Rodriguez",
+"James Huang",
+"Kent Schocknek",
+"Pat Harvey",
+"Sharon Tay",
+"Rick Garcia",
+"Leah Fredkin",
+"Bill Seward",
+"Rick Chambers",
+"Holly Hannula",
+"Jonny Coyne",
+"Nick Chacon",
+"Kevin Dunigan"
+]},
+
+{"id": 3,
+"name": "Drive",
+
+"writers": [
+"Hossein Amini",
+"James Sallis"
+],
+
+"top_cast": [
+"Ryan Gosling",
+"Carey Mulligan",
+"Bryan Cranston",
+"Albert Brooks",
+"Oscar Isaac",
+"Christina Hendricks",
+"Ron Perlman",
+"Kaden Leos",
+"Jeff Wolfe",
+"James Biberi",
+"Russ Tamblyn",
+"Joe Bucaro III",
+"Tiara Parker",
+"Tim Trella",
+"Jimmy Hart",
+"Tina Huang",
+"Andy San Dimas",
+"John Pyper-Ferguson"
+]}
+
+]}

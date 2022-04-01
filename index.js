@@ -54,7 +54,35 @@ app.post('/movies', (req, res) => {
     )
 })
 
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display == "none" || x.style.display == "") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
 
+  }
+}
+
+function myFunction1() {
+  var y = document.getElementById("myDIV1");
+  if (y.style.display == "none" || y.style.display == "") {
+    y.style.display = "block";
+  } else {
+    y.style.display = "none";
+
+  }
+}
+
+function myFunction2() {
+  var z = document.getElementById("myDIV2");
+  if (z.style.display == "none" || z.style.display == "") {
+    z.style.display = "block";
+  } else {
+    z.style.display = "none";
+
+  }
+}
 
 app.listen(8080, () => {
     console.log(`API up at: http://localhost:8080`)

@@ -2,11 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+const path = require('path')
+app.use('/css', express.static(path.join(__dirname, 'public')))
+
 app.use(cors());        // Avoid CORS errors in browsers
 app.use(express.json()) // Populate req.body
 
+//CSS
+
+
 const movies = require('./movies.json');
 
+app.get('', (req, res) => {
+    //res.sendFile(__dirname + '/public/css/style.css')
+    res.sendFile(__dirname + '/index.html')
+
+})
 
 app.get('/movies', (req, res) => {
     res.send(movies)
@@ -16,7 +27,16 @@ app.get('/movies/:id', (req, res) => {
     if (typeof movies[req.params.id - 1] === 'undefined') {
         return res.status(404).send({ error: "Movie not found" })
     }
-    res.send(movies[req.params.id - 1])
+    //res.send(movies[req.params.id - 1])
+    //res.write('<link rel="stylesheet" type="text/css" href="../../public/css/style.css">')
+    res.write("<p> #ID: " + JSON.stringify(movies[req.params.id - 1].id) + "</p>")  
+    res.write("<p> Movie name: " + JSON.stringify(movies[req.params.id - 1].name.toString().replaceAll(',', ', ')) + "</p>")  
+    res.write("<p> Writers: " + JSON.stringify(movies[req.params.id - 1].writers.toString().replaceAll(',', ', ')) + "</p>")  
+    res.write("<p> Top cast: " + JSON.stringify(movies[req.params.id - 1].top_cast, null, ' ') + "</p>")
+    //console.log(JSON.parse(movies))
+    //res.sendFile('mainstyle.css', { root : __dirname})
+    res.send(); 
+    console.log(__dirname)
 })
 
 app.post('/movies', (req, res) => {
@@ -39,3 +59,5 @@ app.post('/movies', (req, res) => {
 app.listen(8080, () => {
     console.log(`API up at: http://localhost:8080`)
 })
+
+// nodemon .

@@ -1,0 +1,65 @@
+
+    /*Alternate Dark Mode-esque Style*/
+    body {  
+    background-color: #21252b;
+    color: #a3e794;
+    }
+    
+    
+    h1 {
+        margin: 15px;
+        text-align: center;
+        
+    }
+
+    hr {
+        margin-left: 10;
+        margin-right: 10;
+    }
+    /*The 'buttons' DIV*/
+    #buttons {
+        margin: auto 10;
+        text-align: center;
+    }
+
+    #data {
+        margin: auto 10;
+        text-align: center;
+        display: inline;
+    }
+
+    #menu_bar {
+        display: inline-flex; /*inline-flex; inline-block*/
+    }
+
+    h1#menu_bar {
+        float: right;
+    }
+    
+    .data {
+        line-height: 1.6;
+        color: #b6e6ab;
+    }
+
+    button {
+        /* Figure out how to set minimum width so that the button content doesn't cut off */
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 24px 25px auto 25px; /*4px 5px auto auto*/
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #5BCC5B;
+    }
+
+    button:active {
+        background-color: #62DB62;
+    }

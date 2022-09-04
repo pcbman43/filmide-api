@@ -1,8 +1,8 @@
 
     /*Alternate Dark Mode-esque Style*/
     body {  
-    background-color: #21252b;
-    color: #a3e794;
+    background-color: #281414;
+    color: #E59595;
     }
     
     
@@ -42,12 +42,12 @@
     
     .data {
         line-height: 1.6;
-        color: #b6e6ab;
+        color: #e5acac;
     }
 
     button {
         /* Figure out how to set minimum width so that the button content doesn't cut off */
-        background-color: #4CAF50;
+        background-color: #ad4c4c;
         border: none;
         border-radius: 4px;
         color: white;
@@ -61,11 +61,11 @@
     }
 
     button:hover {
-        background-color: #5BCC5B;
+        background-color: #cc5b5b;
     }
 
     button:active {
-        background-color: #62DB62;
+        background-color: #d86161;
     }
 
     

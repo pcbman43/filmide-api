@@ -11,5 +11,6 @@ function rerouteToLogin() {
 }
 
 function rerouteToEdit(movieID) {
-  location.href = `${movieID}/edit`;
+  location.href = `${window.location.href}/edit`;
+  // there ARE two ways
 }

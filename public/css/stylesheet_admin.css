@@ -45,6 +45,14 @@
         color: #e5acac;
     }
 
+    textarea.data {
+        background-color: black;
+        resize: both;
+        overflow: auto;
+        text-align: center;
+        /*overflow: hidden;*/
+    }
+
     button {
         /* Figure out how to set minimum width so that the button content doesn't cut off */
         background-color: #ad4c4c;

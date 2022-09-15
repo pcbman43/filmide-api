@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 const port = 8080;
 
+const fs = require('fs') // file system; used for reading and modifying files
 const path = require('path')
 
 //app.use(express.json());
@@ -18,7 +19,7 @@ app.use(cors());        // Avoid CORS errors in browsers
 app.use(express.json()) // Populate req.body
 app.use(session({
 	secret: 'secret',
-    cookie: { maxAge: 300000},
+    cookie: { maxAge: 1800000 },
 	resave: true,
 	saveUninitialized: true
 }));
@@ -29,6 +30,7 @@ AccountsArray = {
 }
 
 const movies = require('./movies.json');
+const { json } = require('express');
 console.log(`Read ${movies.length} objects from movies.json.`);
 
 app.get('/', (req, res) => {
@@ -167,7 +169,7 @@ app.get('/movies/:id', (req, res) => {
             <h1><b>Movie Data // Admin Panel</b></h1>
             </div>
             <div id="menu_bar" style="float: right;">
-            <button type="button" onclick=rerouteToLogin();><span style="font-weight: bold;">MODIFY</span></button>
+            <button type="button" onclick=rerouteToEdit();><span style="font-weight: bold;">MODIFY</span></button>
             </div>
         </div>    
 
@@ -219,6 +221,127 @@ app.get('/movies/:id', (req, res) => {
     res.send();
 })
 
+app.get('/movies/:id/edit', (req, res) => {
+    if (req.session.loggedin == undefined || req.session.loggedin === true) {
+        res.write(`
+        <link href="../../css/stylesheet_admin.css" rel="stylesheet">
+        <script src="../../js/script.js"></script>
+        
+        <div id="main_bar">
+            <div id="menu_bar" style="float: left;">
+            <button type="button" onclick=rerouteToHome();>Return to List</button>
+            </div>
+            <div id="menu_bar" style="text-align: center;">
+            <h1><b>Movie Data // EDITING</b></h1>
+            </div>
+        </div>
+    
+        <hr>
+        <div id="data">
+        
+        <form action="/movies/commit/${movies[req.params.id - 1].id}" method="post"> 
+            <h1> ID: ${JSON.stringify(movies[req.params.id - 1].id)}</h1>
+            <h2> Movie name: </h2>
+            <textarea class="data" name="name" required rows="1" cols="${movies[req.params.id - 1].name.length + 4}">${movies[req.params.id - 1].name.toString()}</textarea><br><br>
+            <h2> Writers: </h2>
+            <textarea class="data" name="writers" required rows="${movies[req.params.id - 1].writers.length}">${movies[req.params.id - 1].writers.toString().replace(/,/g, ',\r\n')}</textarea><br><br>
+            <h2> Top cast: </h2>
+            <textarea class="data" name="top_cast" required rows="${movies[req.params.id - 1].top_cast.length}">${movies[req.params.id - 1].top_cast.toString().replace(/,/g, ',\r\n')}</textarea><br>
+            <!--input type="password" name="password" id="password" required><br><br-->
+            <input type="submit" value="Commit changes">
+        </form>
+
+        </div>
+        `)
+    } else {
+        res.write("Access denied")
+    }
+
+    //console.log(req.session.loggedin)
+
+    res.send()
+})
+
+app.post('/movies/commit/:id', (req, res) => {
+    // literally doesn't work, still here for some reason though
+    if (movies[req.params.id - 1].id > movies.length) {
+        return res.status(400).send({ error: 'One or all params are missing' })
+    }
+
+    //res.send(movies[req.params.id - 1].id);
+
+    var id = movies[req.params.id - 1].id;
+    var name = req.body.name;
+    var writers = req.body.writers;
+    var top_cast = req.body.top_cast;
+    //movies.push(newMovie)
+
+    var array_writers = writers.split(',');
+    var array_top_cast = top_cast.split(',');
+    
+    //S2JS = JSON.parse(writers.split(', '))
+    //console.log(`top_cast - ${stringArray}`)
+
+    var writersString = [];
+    array_writers.forEach(cI => {
+        writersString.push(`\n\t    "${cI.trim()}"`)
+    })
+    //console.log(writersString)
+
+    var top_castString = [];
+    array_top_cast.forEach(cI => {
+        top_castString.push(`\n\t    "${cI.trim()}"`)
+    }) 
+    //console.log(top_castString)
+    
+    /*function prepareData(){
+        var returnValue = `
+    {"id": ${id},
+        "name": "${name}",
+
+        "writers": [${writersString}
+        ],
+
+        "top_cast": [${top_castString}
+        ]
+    }
+        `
+        return returnValue;
+    }*/
+
+    function prepareData(){
+        let RawJSON = {
+            'id': id,
+            'name': name,
+            'writers': writersString,
+            'top_cast': top_castString
+        }
+
+        let jsonData = JSON.stringify(RawJSON, '', 2);
+        return jsonData;
+    }
+    
+    //console.log(prepareData())
+
+    //console.log(JSON.parse(array_writers))
+
+    res.status(201).location(`localhost:${port}/movies/commit/${movies[req.params.id - 1].id}`).send(`
+        ${prepareData()}
+        ${movies[req.params.id - 1].id}
+        
+    `)
+    
+    fs.readFile('example.json', 'utf-8', function (err, data) {
+        console.log(data[101])
+    })
+
+    fs.appendFile('example.json', prepareData(), function (err) {
+        if (err) throw err;
+        console.log('SUCCESSFULLY UPDATED example.json')
+    })
+
+})
+
 
 // JSON data for all movies
 app.post('/movies', (req, res) => {
@@ -231,17 +354,17 @@ app.post('/movies', (req, res) => {
         name: req.body.name
     }
     // deprecated - set for removal
-    /*movies.push(newMovie)
-    res.status(201).location('localhost:8080/movies/' + (movies.length - 1)).send(
+    movies.push(newMovie)
+    res.status(201).location(`localhost:${port}/movies/` + (movies.length - 1)).send(
         newMovie
-    )*/
+    )
 })
 
 app.listen(port, () => {
 	
     var today = new Date();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    console.log(`${time} - API up at: http://localhost:8080
+    console.log(`${time} - API up at: http://localhost:${port}
     `)
 })
 
